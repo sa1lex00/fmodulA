@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Поиск локаций | Праздник в каждый дом</title>
+    <style>
+        /* Общие стили (можно вынести в отдельный файл) */
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --dark: #292F36;
+            --light: #F7FFF7;
+            --accent: #FFE66D;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.7;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Шапка */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(41, 47, 54, 0.1);
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        nav ul {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        /* Основной контент */
+        main {
+            flex: 1;
+            padding: 2rem 0;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--secondary);
+            border-radius: 2px;
+        }
+        
+        /* Карточки локаций */
+        .locations {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .location {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .location:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .location h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .location p {
+            margin-bottom: 0.8rem;
+            color: #666;
+        }
+        
+        .location p strong {
+            color: var(--dark);
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin-top: 1rem;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+        
+        /* Подвал */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(41, 47, 54, 0.1);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+        
+        .footer-links a {
+            color: var(--dark);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .phone {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            nav ul {
+                gap: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .locations {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <header>
+        <a href="index.html" class="logo">Праздник в каждый дом</a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="#">Акции</a></li>
+                <li><a href="#">Управление бронированием</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Доступные локации</h1>
+        
+        <div class="locations">
+            <!-- Карточка локации 1 -->
+            <div class="location">
+                <h2>Парк Горького</h2>
+                <p><strong>Адрес:</strong> Москва, Крымский Вал, 9</p>
+                <p><strong>Дата:</strong> 15.10.2023</p>
+                <p><strong>Свободных зон:</strong> 3</p>
+                <a href="seat.html" class="btn">Выбрать зону</a>
+            </div>
+            
+            <!-- Карточка локации 2 -->
+            <div class="location">
+                <h2>Сокольники</h2>
+                <p><strong>Адрес:</strong> Москва, Сокольнический Вал, 1</p>
+                <p><strong>Дата:</strong> 15.10.2023</p>
+                <p><strong>Свободных зон:</strong> 2</p>
+                <a href="seat.html" class="btn">Выбрать зону</a>
+            </div>
+            
+            <!-- Карточка локации 3 -->
+            <div class="location">
+                <h2>Зарядье</h2>
+                <p><strong>Адрес:</strong> Москва, Варварка, 6</p>
+                <p><strong>Дата:</strong> 16.10.2023</p>
+                <p><strong>Свободных зон:</strong> 1</p>
+                <a href="seat.html" class="btn">Выбрать зону</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Подвал -->
+    <footer>
+        <div class="phone">8 (800) 111-20-20</div>
+        <div class="footer-links">
+            <a href="#">Возврат</a>
+            <a href="#">Обратная связь</a>
+            <a href="#">Политика конфиденциальности</a>
+        </div>
+        <p>© 2023 Праздник в каждый дом. Все права защищены.</p>
+    </footer>
+</body>
+</html>
